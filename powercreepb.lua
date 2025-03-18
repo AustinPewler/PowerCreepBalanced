@@ -16,7 +16,7 @@ SMODS.Atlas{
 SMODS.Joker{
     key = 'powercreepb',
     loc_txt = {
-        name = 'Power Creep',
+        name = 'Power Crept',
         text = {
             "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by twice", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
         }
