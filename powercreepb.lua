@@ -40,6 +40,7 @@ SMODS.Joker{
         }
     },
     loc_vars = function(self, info_queue, center)
+        info_queue[#info_queue+1] = G.P_CENTERS.j_powb_powercrept
         return {vars = {center.ability.extra.Xmult}}
     end,
     calculate = function(self, card, context)
