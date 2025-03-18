@@ -2,7 +2,7 @@ Pop in your mod folder and unzip.
 
 Adds the singular joker, Power Creep: x1.5 Mult, Beating a Boss Blind by twice the required chips creates a Negative of this joker (Copy effect disabled for negative copies).
 
-Unbalanced Version: https://github.com/Lpazos1/PowerCreep/tree/main
+Original Version: https://github.com/Lpazos1/PowerCreep/tree/main
 
 Balanced Version: https://github.com/Lpazos1/PowerCreepBalanced/tree/main
 
