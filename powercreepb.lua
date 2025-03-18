@@ -16,14 +16,14 @@ SMODS.Atlas{
 SMODS.Joker{
     key = 'powercreepb',
     loc_txt = {
-        name = 'Power Crept',
+        name = 'Power Creep',
         text = {
             "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by triple", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
         }
     },
     atlas = 'powercreepb', --atlas' key
     rarity = 3, 
-    cost = 12, 
+    cost = 10, 
     unlocked = true,  
     discovered = true,
     blueprint_compat = true,
