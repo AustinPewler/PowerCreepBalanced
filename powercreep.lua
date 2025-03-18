@@ -18,7 +18,7 @@ SMODS.Joker{
     loc_txt = {
         name = 'Power Creep',
         text = {
-            "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by triple", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
+            "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by twice", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
         }
     },
     atlas = 'powercreep', --atlas' key
@@ -41,33 +41,24 @@ SMODS.Joker{
     calculate = function(self, card, context)
         if context.joker_main then
             return {
-                card = card,
-                Xmult_mod = card.ability.extra.Xmult,
-                message = 'X' .. card.ability.extra.Xmult,
-                colour = G.C.MULT
+                Xmult =1.5
             }
         end
 
         if G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 2) and not card_created then --have to set this to the 3x boss blind condition
             card_created = true
-            print("Creating new card...")
             local success, new_card = pcall(create_card, 'powercreep', G.jokers, nil, nil, nil, nil, 'j_pow_powercreep')
             if not success or not new_card then
-                print("Failed to create new card")
                 if not success then
-                    print("Error:", new_card)
                 end
                 card_created = false -- Reset the flag if card creation fails
                 return
             end
-            print("New card created successfully")
             
             new_card:set_edition({ negative = true }, true)
             new_card:add_to_deck()
             G.jokers:emplace(new_card)
-            print("New card added to deck")
         end
-
         -- Reset the flag when the condition is no longer met
         if not context.setting_blind then
             card_created = false
