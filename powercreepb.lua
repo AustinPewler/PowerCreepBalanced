@@ -18,12 +18,12 @@ SMODS.Joker{
     loc_txt = {
         name = 'Power Crept',
         text = {
-            "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by twice", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
+            "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by triple", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
         }
     },
     atlas = 'powercreepb', --atlas' key
     rarity = 3, 
-    cost = 10, 
+    cost = 12, 
     unlocked = true,  
     discovered = true,
     blueprint_compat = true,
@@ -45,7 +45,7 @@ SMODS.Joker{
             }
         end
 
-        if G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 2) and not card_created then --have to set this to the 3x boss blind condition
+        if G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 3) and not card_created then --have to set this to the 3x boss blind condition
             card_created = true
             local success, new_card = pcall(create_card, 'powercreepb', G.jokers, nil, nil, nil, nil, 'j_powb_powercreepb')
             if not success or not new_card then
