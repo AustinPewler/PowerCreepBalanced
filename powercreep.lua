@@ -48,7 +48,7 @@ SMODS.Joker{
             }
         end
 
-        if context.setting_blind and not card_created then --have to set this to the 3x boss blind condition
+        if G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 2) and not card_created then --have to set this to the 3x boss blind condition
             card_created = true
             print("Creating new card...")
             local success, new_card = pcall(create_card, 'powercreep', G.jokers, nil, nil, nil, nil, 'j_pow_powercreep')
