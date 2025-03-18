@@ -1,6 +1,6 @@
 --- STEAMODDED HEADER
---- MOD_NAME: powercreep
---- MOD_ID: powercreep
+--- MOD_NAME: Power Creep Balanced
+--- MOD_ID: powercreepb
 --- MOD_AUTHOR: [dogwearingdurag]
 --- MOD_DESCRIPTION: Slightly unbalanced mod
 --- PREFIX: xmpl
@@ -13,29 +13,33 @@ SMODS.Atlas{
     px = 71, --width of one card
     py = 95 -- height of one card
 }
+local event_added = false
 SMODS.Joker{
-    key = 'powercreepb',
+    key = 'powercreepa',
     loc_txt = {
         name = 'Power Creep',
         text = {
-            "{X:mult,C:white} X#1# {} Mult", "Beating a {C:attention}Boss Blind{} by triple", "the required chips creates", "a {C:blue}Negative{} copy of Power Creep"
+            "{X:mult,C:white} X#1# {} Mult",
+            "Beating a {C:attention}Boss Blind{} by triple",
+            "the required chips creates",
+            "a {C:blue}Negative{} Power Crept"
         }
     },
-    atlas = 'powercreepb', --atlas' key
-    rarity = 3, 
-    cost = 10, 
-    unlocked = true,  
+    atlas = 'powercreepb', -- atlas' key
+    rarity = 3,
+    cost = 10,
+    unlocked = true,
     discovered = true,
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
-    pos = {x = 0, y = 0}, 
-    config = { 
-      extra = {
-        Xmult = 1.5 
-      }
+    pos = {x = 0, y = 0},
+    config = {
+        extra = {
+            Xmult = 1.5
+        }
     },
-    loc_vars = function(self,info_queue,center)
+    loc_vars = function(self, info_queue, center)
         return {vars = {center.ability.extra.Xmult}}
     end,
     calculate = function(self, card, context)
@@ -44,27 +48,57 @@ SMODS.Joker{
                 Xmult =1.5
             }
         end
-
-        if G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 3) and not card_created then --have to set this to the 3x boss blind condition
-            card_created = true
-            local success, new_card = pcall(create_card, 'powercreepb', G.jokers, nil, nil, nil, nil, 'j_powb_powercreepb')
-            if not success or not new_card then
-                if not success then
-                end
-                card_created = false -- Reset the flag if card creation fails
-                return
-            end
-            
-            new_card:set_edition({ negative = true }, true)
-            new_card:add_to_deck()
-            G.jokers:emplace(new_card)
+        if context.setting_blind then
+            event_added = false
         end
-        -- Reset the flag when the condition is no longer met
-        if not context.setting_blind then
-            card_created = false
+        local counter = #SMODS.find_card('j_powb_powercreepa')
+        if not event_added and G.GAME.blind.boss and (G.GAME.chips / G.GAME.blind.chips >= 3) then
+            for i = 1, counter do
+                local new_card = create_card('powercrept', G.jokers, nil, nil, nil, nil, 'j_powb_powercrept')
+                new_card:set_edition({ negative = true }, true)
+                new_card:add_to_deck()
+                G.jokers:emplace(new_card)
+            end
+            event_added = true -- Set the flag to true after adding the event
         end
     end,
-    in_pool = function(self,wawa,wawa2)
+    in_pool = function(self, wawa, wawa2)
         return true
+    end,
+}
+SMODS.Joker{
+    key = 'powercrept',
+    loc_txt = {
+        name = 'Power Crept',
+        text = {
+            "{X:mult,C:white} X#1# {} Mult"
+        }
+    },
+    atlas = 'powercreepb', -- atlas' key
+    rarity = 3,
+    cost = 1,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    pos = {x = 1, y = 0},
+    config = {
+        extra = {
+            Xmult = 1.5
+        }
+    },
+    loc_vars = function(self, info_queue, center)
+        return {vars = {center.ability.extra.Xmult}}
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                Xmult =1.5
+            }
+        end
+    end,
+    in_pool = function(self, wawa, wawa2)
+        return false
     end,
 }
